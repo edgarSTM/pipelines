@@ -4,10 +4,7 @@ pipeline {
             image 'maven:3.8.1-adoptopenjdk-11'
             args '-v /root/.m2:/root/.m2'
         }
-        docker {
-            image 'docker:dind'
-            args '--detach --privileged --network jenkins --env DOCKER_TLS_CERTDIR=/certs --volume jenkins-docker-certs:/certs/client --volume jenkins-data:/var/jenkins_home --publish 3000:3000 --publish 2376:2376'
-        }
+        any
     }
     stages {
         stage('Build') {
