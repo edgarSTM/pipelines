@@ -5,7 +5,6 @@ pipeline {
             args '-v /root/.m2:/root/.m2'
         }
     }
-    agent any
     stages {
         stage('Build') {
             steps {
@@ -22,6 +21,7 @@ pipeline {
                 }
             }
         }
+        agent any
         stage('Build Docker Image') {
             steps {
                 script {
