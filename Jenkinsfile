@@ -1,17 +1,24 @@
 pipeline {
-    agent {
+    agent none
+    stages {
+        stage('Build') {
+        agent {
         docker {
             image 'maven:3.8.1-adoptopenjdk-11'
             args '-v /root/.m2:/root/.m2'
+            }
         }
-    }
-    stages {
-        stage('Build') {
             steps {
                 sh 'mvn -B -DskipTests clean package'
             }
         }
         stage('Test') {
+            agent {
+            docker {
+                image 'maven:3.8.1-adoptopenjdk-11'
+                args '-v /root/.m2:/root/.m2'
+                }
+        }
             steps {
                 sh 'mvn test'
             }
@@ -30,6 +37,7 @@ pipeline {
             }
         }
         stage('Deploy Docker Image') {
+            agent any
             steps {
                 script {
                  withCredentials([usernamePassword(credentialsId: 'dockerhub-pwd', passwordVariable: 'passhub', usernameVariable: 'edgarstm')]) {
@@ -41,6 +49,7 @@ pipeline {
         }
     
     stage('Deploy App on k8s') {
+      agent any
       steps {
             script {
                 try{
