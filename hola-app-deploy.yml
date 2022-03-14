@@ -1,0 +1,37 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: hola-app-maven
+  namespace: default
+  labels:
+    app: hola-app-maven
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hola-app-maven
+  template:
+    metadata:
+      labels:
+        app: hola-app-maven
+    spec:
+      containers:
+      - name: hola-app-maven
+        image: "edgarstm/hola-app:latest"
+        ports:
+          - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hola-app
+  namespace: default
+spec:
+  selector:
+    app: hola-app
+  type: LoadBalancer
+  ports:
+  - name: http
+    targetPort: 3000
+    port: 8082
