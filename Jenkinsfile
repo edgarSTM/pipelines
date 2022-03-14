@@ -24,7 +24,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                  sh 'docker build -t edgarstm/hola-app:latest .'
+                  sh 'docker build -t edgarstm/hola-app:latest ./'
                 }
             }
         }
