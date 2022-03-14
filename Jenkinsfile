@@ -8,10 +8,10 @@ pipeline {
                 }
             }
         }
-        stage('Test and build') {
+        stage('Build') {
             steps {
                 script {
-                    sh 'mvn test && mvn package'
+                    sh 'mvn  clean package'
                 }
             }
         }
