@@ -21,8 +21,8 @@ pipeline {
                 }
             }
         }
-        agent any
         stage('Build Docker Image') {
+            agent any
             steps {
                 script {
                   sh 'docker build -t edgarstm/hola-app:latest ./'
